@@ -24,7 +24,7 @@ const isValidUrl = (string) => {
 
 // Routes
 app.post('/api/shorten', (req, res) => {
-  const { originalUrl } = req.body;
+  const { originalUrl, baseUrl } = req.body;
 
   if (!originalUrl) {
     return res.status(400).json({ error: 'URL is required' });
@@ -36,7 +36,7 @@ app.post('/api/shorten', (req, res) => {
 
   // Generate short ID
   const shortId = nanoid(8);
-  const shortUrl = `http://localhost:${PORT}/${shortId}`;
+  const shortUrl = `${baseUrl}/${shortId}`;
 
   // Store in database
   urlDatabase.set(shortId, {
